@@ -1,0 +1,38 @@
+{% load static %} 
+{% include "temp_dir/header.html" %} 
+
+<div class="container">
+
+
+
+  
+
+<div class="row">
+ 
+ <div class="col-md-12 text-center" style="color:#fff">
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <h1 style="font-family: poppinsBold;">Payment Successful</h1>
+  <div style="height:300px;">
+  <img src="{% static 'images/clock.png' %}" id="meditatingBulb" style="max-height: 250px;margin:20px;"/>
+  </div>
+  <br>
+  <br>
+  <p>Awesome.<br>You are all set to experience Ahhaa One.</p>
+   
+  </div>
+ 
+</div>
+ 
+</div>
+<script>
+   setTimeout(function () {
+       window.location.href =  "../play";
+    }, 2000); //will call the function after 2 secs.
+
+
+</script>

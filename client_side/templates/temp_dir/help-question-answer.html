@@ -1,0 +1,54 @@
+{% load static %}
+{% include "temp_dir/header.html" %}
+{% include "temp_dir/navbar-3.html" %}
+ </header>
+  <body class="invert-background">
+ 
+ 
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'help' %}">Ahhaa Help Center</a></li>
+    <li class="breadcrumb-item" aria-current="page"><a id="helpheading" href="{% url 'help'%}">Ahhaa One</a></li>
+    <li id="question" class="breadcrumb-item active" aria-current="page">Article</li>
+  </ol>
+</nav>
+  
+<div class="container">
+
+
+<div class="row">
+ 
+ <div class="col-md-2 col-lg-4 questionSection">
+ <!-- // array of questions from that section start -->
+{% for question in questions %}
+  <a href="{% url 'help-question-answer' question.questionID %}">
+    <h6 class="questionsidebar smallText">{{question.questionID__questionName}}</h6>
+  </a>
+{% endfor %}
+ <!-- // array of questions from that section end -->
+ </div>
+ <div class="col-sm-12 col-md-10 col-lg-8 answersection">
+  <h6 style="font-family: poppinsBold;">{{ answer.0.questionName }}</h6>
+  <p style="text-align: justify;" class="question">{{ answer.0.queationsAnswer }}.</p>
+ 
+ <div>Need more help? Email us at <a href="mailto:help@ahhaa.com" style="color:#99CA3C">help@ahhaa.com.</a></div>
+ <br>
+  <a class="nav-link btn btn-sm btn-primary menu-text second-color roundButton blackText searchpage-controls1 smallText" href="{% url 'help-request'%}" role="button" style="float:left">Submit a request</a>
+  </div>
+</div>
+</div>
+{% include 'temp_dir/footer.html' %}
+<script>
+   $(document).ready(function(){
+      var data = sessionStorage.getItem('helpHeading');
+      var data1 = sessionStorage.getItem('helpQuestion');
+      var url = sessionStorage.getItem('link');
+      $('#helpheading').text(data);
+      $('#question').text(data1);
+      $('#question1').text(data1);
+      $("#helpheading").attr("href", url);
+      // sessionStorage.setItem('link', window.location.href);
+    });
+</script>
+ </body>
+

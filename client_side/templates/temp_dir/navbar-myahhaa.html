@@ -1,0 +1,49 @@
+<br><br><br>
+<br><br><br>
+<div class="container">
+    <div class="row myAhhaa webNavBar">
+      <div class="col-sm-4 myAhhaaMenu"><i class="fa fa-clock-o" aria-hidden="true"></i> <span class="highText">526</span> mins<br><span class="pink-text-color">Total time spent</span></div>
+      <div class="col-sm-4 myAhhaaMenu"><i class="fa fa-eye" aria-hidden="true"></i><a href="{% url 'newins' %}">My insights</a></div>
+	     <div class="col-sm-4 myAhhaaMenu"><i class="fa fa-star" aria-hidden="true"></i><a href="{% url 'newjourney' %}">My Journey</a></div>
+    </div>
+    <div class="row myAhhaa mobileNavBar">
+      <div class="col-sm-4 myAhhaaMobileMenu"><i class="fa fa-clock-o" aria-hidden="true"></i> </div>
+      <div class="col-sm-4 myAhhaaMobileMenu"><a href="{% url 'newins' %}"><i class="fa fa-eye" aria-hidden="true"></a></i></div>
+	     <div class="col-sm-4 myAhhaaMobileMenu"><a href="{% url 'newjourney' %}"><i class="fa fa-star" aria-hidden="true"></a></i></div>
+    </div>
+    <div class="row myAhhaa mobileNavBarActive">
+      <div class="col-sm-12" id="activeMobileTab">My Journey</div>
+
+    </div>
+
+</div>
+<script>
+ 
+  function activeMobileTab(i)
+  {
+    //var i = $(".myAhhaaMobileMenu").index(this);
+     var c="";
+     var clr="";
+     if(i==0)
+     {
+      c="My Ahhaa Time";
+      clr="#7E8CE0";
+           }
+     if(i==1)
+     {
+            c="My Insights";
+                  clr="#FFBF00";
+     }
+     if(i==2)
+     {
+            c="My Journey";
+                  clr="#FFA48E";
+     }
+     $(".webNavBar .myAhhaaMenu").removeClass("activeMyAhhaa");
+     $(".myAhhaaMenu").eq(i).addClass("activeMyAhhaa");
+     $(".mobileNavBarActive").css({"background-color":clr});
+     $("#activeMobileTab").html(c);
+    }
+  
+</script>
+<br><br><br>

@@ -1,0 +1,47 @@
+{% load static %} 
+{% include "temp_dir/header.html" %}
+ {% include "temp_dir/navbar-3.html" %}
+<body class="invert-background">
+  <!-- need to put nlog image -->
+  <div
+    class="container"
+    style="
+      background-image: url('http://picsum.photos/1500');
+      min-height: 300px;
+      margin: 0;
+      max-width: 100%;
+      padding: 0;
+    "
+  >
+    <div class="row">
+      <div class="page-header text-center"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row blogrow">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'blogs' %}">Blogs</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            {{ blog.blogTitle }}
+          </li>
+        </ol>
+      </nav>
+      <div class="col-12">
+        <h3>{{ blog.blogTitle }}</h3>
+
+        <div class="mb-12">
+          <span>{{ blog.blogDate }} | {{ blog.blogCreatedBy }}</span>
+          <br />
+          <br />
+          <p class="card-text">{{ blog.blogDescription }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'temp_dir/footer.html' %}
+</body>

@@ -1,0 +1,99 @@
+{% load static %} 
+{% include "temp_dir/header.html" %} 
+{% include "temp_dir/navbar-3.html" %}
+<body class="invert-background">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'help' %}">Ahhaa Help Center</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Submit Request</li>
+    </ol>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <h3 style="font-family: poppinsBold">SUBMIT A REQUEST</h3>
+        <br />
+        <form
+          id="helpform"
+          action="{% url 'helpform-create' %}"
+          method="POST"
+          class="was-validated"
+        >
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="uname">Email*</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Enter Email"
+              name="helpEmail"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject*</label>
+            <select
+              class="form-control"
+              id="subject"
+              placeholder="Enter subject"
+              name="helpSubject"
+              required
+            >
+              <option></option>
+              <option>Issue a Bug</option>
+              <option>Payment related query</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="description">Description*</label>
+            <textarea
+              class="form-control"
+              id="description"
+              placeholder="Enter description"
+              name="helpDescription"
+              required
+            ></textarea>
+            <br />
+            <div class="input-group mb-3">
+              <div
+                id="g-recaptcha"
+                name="g-recaptcha"
+                class="g-recaptcha"
+                data-sitekey="6LeLHmQaAAAAAKdU_gBk9IX09iA50GCghdG0OZB6"
+              ></div>
+            </div>
+            <br />
+            <input
+              type="submit"
+              class="btn btn-primary second-color roundButton blackText"
+              value="Submit"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% include 'temp_dir/footer.html' %} 
+  {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+    {% endfor %}
+  {% endif %}
+  <script src="https://www.google.com/recaptcha/api.js?render=reCAPTCHA_site_key"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"
+  ></script>
+</body>

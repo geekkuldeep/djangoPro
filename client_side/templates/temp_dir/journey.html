@@ -1,0 +1,115 @@
+{% include "temp_dir/header.html" %}
+{% include "temp_dir/navbar-3.html" %}
+{% load static %}
+<body>
+  {% include "temp_dir/navbar-myahhaa.html" %}
+  <br><br><br>
+
+  <div class="container myjourneyContainer">
+    <div class="row">
+      <h2 class="collectionHeading">Your Most Played Tracks</h2>
+      <h4 class="collectionHeadingView">View all ></h4>
+      <div class="owl-carousel owl-theme myjourney" id="most-played">
+      </div>
+    </div>
+  </div>
+
+  <div class="container myjourneyContainer">
+    <div class="row">
+      <h2 class="collectionHeading">Your Most Viewed Collections</h2>
+      <h4 class="collectionHeadingView">View all ></h4>
+      <div class="owl-carousel owl-theme myjourney" id="most-collection">
+      </div>
+    </div>
+  </div>
+
+  <div class="container myjourneyContainer">
+    <div class="row">
+      <h2 class="collectionHeading">Favourite Tracks</h2>
+      <h4 class="collectionHeadingView">View all ></h4>
+      <div class="owl-carousel owl-theme myjourney" id="fav_track">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    activeMobileTab(2);
+
+    $(document).ready(function(){
+    userid = $.cookie("uid");
+      var img_url = "{% static 'images/square.jpg' %}";
+      // fav track ajax
+      var urls1 = "{% url 'favtrack-list' 0 %}".replace('0', userid);
+      $.ajax({
+        type: "GET",
+        url: urls1,
+        success: function(data){
+          
+          console.log(data[0].trackID__trackCoverArt);
+          for(var i = 0; i < data.length; i++){
+            var img = "{% static 'images/img/' %}"+data[i].trackID__trackCoverArt;
+            var ele = '<div class="item myjourneyCovers"><img id='+data[i].trackID+'\
+            class="card-img-top" src="'+img+'" alt=""></div>'
+            $("#fav_track").append(ele);
+          }
+          setCarousel("fav_track");
+        },
+        error: function(xhr){
+          console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);  
+      }});
+
+      // most played ajax
+      var urls2 = "{% url 'usertrack-peruser' 0 %}".replace('0', userid);
+      $.ajax({
+        type: "GET",
+        url: urls2,
+        success: function(data){
+          for(var i = 0; i < data.length; i++){
+            var img = "{% static 'images/img/' %}" + data[i].trackID__trackCoverArt;
+            var ele = '<div class="item myjourneyCovers"><img class="card-img-top" id='+data[i].trackID+'\
+              src="'+img+'" alt="" /></div>'
+            $("#most-played").append(ele);
+          }
+          setCarousel("most-played");
+        },
+        error: function(xhr){
+          console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);  
+        }});
+        
+      // most visited collection
+      var urls3 = "{% url 'usertrack-perusercol' 0 %}".replace('0', userid);
+      console.log(urls3);
+        $.ajax({
+          type: "GET",
+          url: urls3,
+          success: function(data){
+            for(var i = 0; i < data.length; i++){
+              var img = "{% static 'images/img/' %}"+data[i].trackID__trackCoverArt;
+            var ele = '<div class="item myjourneyCovers">\
+              <img class="card-img-top collectionsImage1"src="'+img+'" alt=""/></div>'
+              $("#most-collection").append(ele);
+            }
+            setCarousel("most-collection");
+          },
+          error: function(xhr){
+            console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);  
+          }});
+        
+      function setCarousel(id) {
+        var owl = $("#"+id);
+        owl.owlCarousel({
+        items: 5,
+        loop: false,
+        margin: 10,
+        autoplay: false,
+        autoplayTimeout: 2000,
+        navigation: false,
+        dots: false,
+        autoplayHoverPause: true,
+        
+      })
+    };
+
+    });
+  </script>
+</body>

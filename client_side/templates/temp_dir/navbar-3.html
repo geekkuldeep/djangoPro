@@ -1,0 +1,37 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bgcolor-primary">
+          
+    <a class="navbar-brand" href="{% url 'newhome' %}"><img src="{% static 'images/logo.png' %}" class="logo-simple-menu"/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse  text-left" id="navbarCollapse">
+	 
+		
+      <ul class="navbar-nav ml-auto menu-text navBarList2">
+      <li class="nav-item">
+		 <div class="searchform navbar2">
+		  <input type="text" class="searchinput" id="menubarsearchbox" placeholder="" name="search">
+		  <button type="submit" class="searchbutton" id="menubarsearchboxbtn" onclick="searchresults('menubarsearchbox')" ><i class="fa fa-search"></i></button>
+     </div>
+     
+  
+     
+                 </li>
+      
+	
+	        <li class="nav-item">
+          <a class="nav-link menu-text" href="{% url 'ahhaa-one' %}" style="color:#7E8CE0;" role="button">Ahhaa One</a>
+        </li>
+        
+      </ul>
+     
+    </div>
+	
+  </nav>
+       <!-- <br><br><br>
+<div style="height: 150px;width: 100%;"></div> -->
+<script>
+  searchPlaceholder();
+</script>

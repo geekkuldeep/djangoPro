@@ -1,0 +1,191 @@
+{% include 'temp_dir/header.html' %}
+{% load static %}
+  <header>
+  
+   <nav class="navbar navbar-expand-md navbar-dark fixed-top bgcolor-primary">
+    <a class="navbar-brand" href="#"><img src="{% static 'images/logo.png' %}" class="logo-simple-menu"/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse  text-left" id="navbarCollapse">
+      <ul class="navbar-nav ml-auto menu-text">
+        
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'collections' %}">Collections</a>
+        </li>
+	  
+        
+		<li class="nav-item active">
+      {% if user.is_authenticated %}
+        <label style="font-size: 20px; color:white; margin-right: 10px; margin-top: 10px;">Welcome,<br> {{user.first_name}}</label>
+      {% else %}
+        <a class="nav-link" href="{% url 'login' %}">Login</a>
+      {% endif %}
+    </li>
+	
+          <li class="nav-item">
+          <a class="nav-link btn btn-sm btn-primary menu-text second-color roundButton" href="{% url 'ahhaa-one' %}" role="button">Ahhaa One</a>
+        </li>
+      </ul>
+	  
+	  
+     
+    </div>
+  </div>
+  
+  </nav>
+       
+ </header>
+
+ 
+<main role="main">
+<div class="container" style="max-width:100%;">
+
+<div class="searchform" style="z-index:10;">
+  <input type="text" class="searchinput" id="query" placeholder="" name="search"  style="z-index:10;">
+  <!--<button type="submit" class="searchbutton"  style="z-index:10;"><i class="fa fa-search"></i></button>-->
+  <button type="submit" class="searchbutton"  style="z-index:10;"><img src='{% static "images/white-bulb.png" %}' class="bulb-search"  onclick="searchresults('query')" /></button>
+
+</div>
+       
+
+<div id='prompt' class="searchprompt">
+		    <ul style="list-style: none;"> 
+			<li></li>
+		    </ul>
+	    </div>
+        
+        </div>
+<div class="col-md-12" style="padding-top:100px;"></div>
+
+<div class="container categoryContainer">
+  
+    <div class="row">
+   <div class="owl-carousel owl-theme categoryCarousel">
+
+        {% for arr in category %}
+          {% with 'images/categories/'|add:arr.1|add:'.png' as image_static %}
+            <div class="item"><span class="categoryText">{{ arr.0 }}</span><img class="card-img-top category" src="{% static image_static %}" alt=""></div>
+          {% endwith %}
+        {% endfor %}
+</div>
+        </div>
+</div>
+    
+<div class="container-fluid homePage">
+         
+	  {% for element in ctas %}
+        <div class="homeSection"></div>
+        <div class="row" style="max-width:70%;margin:auto;padding:0;">   
+          <div class="col-md-12">
+            {% with 'images/'|add:element.1 as image_static %}
+              <img class="card-img-top homeSectionImgSmall" src="{% static image_static %}" alt="" >
+            {% endwith %}
+          </div>   
+
+          <div class="order-sm-{{ element.5 }}  order-md-{{ element.5 }}  order-lg-{{ element.5 }} col-md-6 col-sm-12 homeSectionText">
+            <br/>
+            <h3 class="homeSectionText">{{ element.0 }}</h3>
+            <p class="homeSectionText">{{ element.2 }}</p>
+            <a class="nav-link btn btn-sm btn-primary menu-text second-color roundButton blackText homeSectionText" href="ahhaa-one.php" role="button">{{ element.3 }}</a>
+          </div>
+          <div class="order-sm-{{ element.4 }}  order-md-{{ element.4 }} order-lg-{{ element.4 }} col-md-6 p-2  col-sm-12 ">
+            
+            {% ifnotequal element.6 "right" %}
+              {% with 'images/'|add:element.1 as image_static %}
+                <img class="card-img-top homeSectionImg" src="{% static image_static %}" style="float:left" alt="" >
+              {% endwith %}
+            {% else %}
+              {% with 'images/'|add:element.1 as image_static %}
+                <img class="card-img-top homeSectionImg" src="{% static image_static %}" style="float:right" alt="" >
+              {% endwith %}
+            {% endifnotequal %}
+              
+          </div>
+        </div>
+
+  {% endfor %}
+
+</div>
+	
+	
+    
+  <div class="homeSection"></div>
+    
+  <div class="container partnerContainer">
+  <h4 style="color:#fff;text-align:center; margin-bottom: 50px;">Experienced at</h4>
+        <div class="row"  style="opacity:0.5; ">
+		
+   <div class="owl-carousel owl-theme categoryCarousel">
+    {{ catImg }}
+    {% for img in catImg %}
+      {% with 'images/partners/'|add:img|add:'.svg' as image_static %}
+        <div class="item"><a href="#"><img class="card-img-top category" src="{% static image_static %}"style="height:50px;" alt=""></a></div>
+      {% endwith %}
+    {% endfor %}
+</div>
+        </div>
+</div>
+<script>
+    
+    searchPlaceholder();
+	var owl = $('.categoryCarousel');
+owl.owlCarousel({
+    items:6,
+    loop:true,
+	margin:0,
+    autoplay:true,
+	navigation:false,
+	dots: false,
+    autoplayHoverPause:true,
+		responsiveClass:true,
+    responsive:{
+        0:{
+            items:3,
+        },
+        600:{
+            items:3,
+        },
+        1000:{
+            items:6
+        }
+    }
+});
+
+  $(".highcharts-container ").css("z-Index","-10");
+      $('#prompt').vTicker({
+         speed: 1000,
+         pause: 1000,
+         showItems: 1,
+         animation: 'fade',
+         mousePause: true,
+         height: 1,
+         direction: 'up'
+     });
+
+     var getSearch = "{% url 'search-list' %}";
+      $.ajax({
+        type: "GET",
+        url: getSearch,
+        success: function(data){
+            var col=["#4ACFAC","#7E8CE0","#FFBF00","#4ACFAC","#00A6FB"];
+          for(var i = 0; i < data.length; i++){
+            var ele = "<li>I am feeling <span class='keywords' style='color:"+col[i]+"'> "+data[i].searchQuery+"</span><li>"
+            $("#prompt ul").append(ele);
+          }
+          setCarousel("most-played");
+        },
+        error: function(xhr){
+          console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);
+        }});
+
+        
+	 </script>
+	 
+   <form class="subscribeform" action="action_page.php">
+      <input type="text" class="subscribeinput" placeholder="Enter your Email" name="search">
+      <button type="submit"  class="subscribebutton second-color">Subscribe</button>     
+  </form>
+  </main>
+  {% include 'temp_dir/footer.html' %}

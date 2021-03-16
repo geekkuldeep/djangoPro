@@ -1,0 +1,255 @@
+{% load static %}
+{% include "temp_dir/header.html" %}
+{% include "temp_dir/navbar-3.html" %}
+{% block content %}
+  <body class="goToPreview">
+
+    <div class="container">
+        <div class="row">
+        <div class="page-header text-center" style="margin-top:0">
+        <label  style="font-size:25px;width:100%;">Welcome,  <span  style="width:100%;color:#99CA3C;">{{ request.user.first_name }}</span></label>
+            <label  style="font-size:20px;width:100%;"><span id="searched">searched keywords</span> <span  style="width:100%;color:#99CA3C;" id="totalresults">40 results</span></label>
+         </div>
+         <div class="col-md-12" id="reldiv">
+       
+         <div class="col-md-6" style="float:left;">
+                   <img src="{% static 'images/' %}" class="gotoNextPage" id="relimg" style="border-radius:15px;margin:50px 0 50px 50px;max-width:300px;" alt="Card image cap">
+               </div>
+             <div class="col-md-12 col-lg-6" style="color:#fff;float:left;margin-top:50px;vertical-align:middle;">
+             <div style="display: table; height: 400px; overflow: hidden;">
+         <div style="display: table-cell; vertical-align: middle;">
+               <h3  style="font-size:30px;" id="reltracktype"></h3>
+               <h3  style="font-size:20px;" id="reltrackname"></h3>
+               <h3  style="font-size:20px;">COLLECTION: <label style="font-weight:normal;"  id="reltrackcollections"></label></h3>
+                 <label id="reltrackduration"></label><br>
+          <div class="searchpage-controls">
+          <a class="nav-link btn btn-sm btn-primary menu-text second-color roundButton blackText searchpage-controls1" href="{% url 'play' %}" role="button" style="float:left"><i class="fa fa-play-circle" aria-hidden="true"></i> Play Now</a><i class="fa fa-heart-o searchpage-controls2" aria-hidden="true"></i>
+          <i class="fa fa-share-alt searchpage-controls3" aria-hidden="true"></i>
+          </div>
+         </div></div>
+         
+               </div>
+           </div>
+           
+              </div>
+           
+        </div>
+       
+       
+       
+       <div class="container myjourneyContainer">
+       
+               <div class="row">
+                    <h2 class="searchSectionHeading" style="color:#FFBF00; font-family:poppinsBold; font-size:38px; margin-bottom: 50px">Quick Shift</h2>
+             <!-- <h4  class="searchSectionCount" id="quickcount"></h4> -->
+          <div class="owl-carousel owl-theme quickshift"></div>
+               </div>
+       </div>
+       
+       
+       <div class="container myjourneyContainer">
+       
+               <div class="row">
+                    <h2 class="searchSectionHeading" style="color:#7E8CE0; font-family:poppinsBold; font-size:38px; margin-bottom: 50px">Transformation</h2>
+             <!-- <h4  class="searchSectionCount" id="transformationcount"></h4> -->
+          <div class="owl-carousel owl-theme transformation"></div>
+               </div>
+       </div>
+       
+       
+       
+       <div class="container myjourneyContainer">
+       
+               <div class="row">
+                    <h2 class="searchSectionHeading" style="color:#A4C756; font-family:poppinsBold; font-size:38px; margin-bottom: 50px">In-Depth</h2>
+             <!-- <h4  class="searchSectionCount" id="indepthcount"></h4> -->
+          <div class="owl-carousel owl-theme indepth"></div>
+               </div>
+       </div>
+       
+        </div>
+       
+ <br><br><br>
+
+ 
+
+</body>
+  <script>
+      var objArr=[];
+      $(document).ready(function(){
+        var img = "{% static 'images/' %}";
+        var currentTrackId;
+        var trackID;
+        var q=localStorage.getItem('query');
+        q = q.replace(/[^a-zA-Z ]/g,' ');
+        $("#searched").text(q);
+        searchQuery = q;
+        urls = "{% url 'search-create' %}";
+        $.ajax({
+            type: "POST",
+            url: urls,
+            data: {
+                csrfmiddlewaretoken:"{{ csrf_token }}",
+                "searchQuery" : searchQuery,
+            },
+            success: function(data){
+                    $("#test").text(data);
+                    var showd='';
+
+                if(data.relevant)
+                {
+                    $("#totalresults").text(data.totalresults+" MATCHES");
+                    $("#reltrackname").text(data.relevant.trackName);
+                    $("#reltrackcollections").text(data.relevant.trackCollections);
+                    $("#reltrackduration").text("DURATION: "+data.relevant.trackAudioLength);
+                    $("#reltracktype").text('Instant & Relevant');
+                    $("#relimg").prop("src",img+data.relevant.trackCoverArt);
+                    objArr.push("i"+data.relevant.trackID);
+                }
+
+                if(data.quick)
+                {
+                    var str='';
+                    for(var i=0;i<data.quick.totaltracks;i++)
+                    {
+                        str+='<div class="item myjourneyCovers"> <img class="card-img-top gotoNextPage" src="'+img+data.quick.trackItems[i].trackCoverArt+'" alt=""> </div>';
+                        objArr.push("q"+data.quick.trackItems[i].trackID);
+                    }
+                        $(".quickshift").html(str);
+                      //  $("#quick" + i).prop("src", $("#quick" + i).prop("src") + data.quick.trackItems[i].trackCoverArt);
+
+                   $("#quickcount").text(" "+data.quick.totaltracks+" MATCHES");
+
+                }
+                if(data.transformation)
+                {
+                    var str='';
+                    for(var i=0;i<data.transformation.totaltracks;i++)
+                    {
+                        str+='<div class="item myjourneyCovers"> <img class="card-img-top gotoNextPage" src="'+img+data.transformation.trackItems[i].trackCoverArt+'" alt=""> </div>';
+                        objArr.push("t"+data.transformation.trackItems[i].trackID);
+                        
+                    }
+                        $(".transformation").html(str);
+                      //  $("#quick" + i).prop("src", $("#quick" + i).prop("src") + data.quick.trackItems[i].trackCoverArt);
+
+                   $("#transformationcount").text(" "+data.transformation.totaltracks+" MATCHES");
+
+                }
+
+                 if(data.indepth)
+                {
+                    var str='';
+                    for(var i=0;i<data.indepth.totaltracks;i++)
+                    {
+                        str+='<div class="item myjourneyCovers"> <img class="card-img-top gotoNextPage" src="'+img+data.indepth.trackItems[i].trackCoverArt+'" alt=""> </div>';
+                        objArr.push("i"+data.indepth.trackItems[i].trackID);
+                       
+                    }
+                        $(".indepth").html(str);
+                      //  $("#quick" + i).prop("src", $("#quick" + i).prop("src") + data.quick.trackItems[i].trackCoverArt);
+
+                   $("#indepthcount").text(" "+data.indepth.totaltracks+" MATCHES");
+
+                }
+                 
+
+dynamicChages();
+            },
+            error: function(xhr){
+                console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);  
+            }
+        });
+        
+        function loadPlay()
+        {
+          //localStorage.setItem("set",objArr);
+          localStorage.setItem("clicked",this.id);
+          document.cookie = "set="+objArr+";path=/";
+          location.href="{% url 'play' %}";
+        }
+       function dynamicChages()
+       {
+        $(".gotoNextPage").click(function()
+        {
+            loadPlay();
+
+        });
+
+            var owl2 = $('.quickshift');
+
+owl2.owlCarousel({
+    items:4,
+    loop:false,
+    margin:10,
+    autoplay:false,
+    autoplayTimeout:2000,
+    navigation:false,
+    dots: false,
+    autoplayHoverPause:true,
+                responsiveClass:true,
+    responsive:{
+        0:{
+            items:3,
+            nav:true
+        },
+        600:{
+            items:5,
+            nav:false
+        }
+    }
+});
+
+
+ var owl1 = $('.transformation');
+owl1.owlCarousel({
+    items:7,
+    loop:false,
+    margin:10,
+    autoplay:false,
+    autoplayTimeout:2000,
+    navigation:false,
+    dots: false,
+    autoplayHoverPause:true,
+                responsiveClass:true,
+    responsive:{
+        0:{
+            items:3,
+            nav:true
+        },
+        600:{
+            items:5,
+            nav:false
+        }
+    }
+});
+
+var owl3 = $('.indepth');
+owl3.owlCarousel({
+    items:6,
+    loop:false,
+    margin:10,
+    autoplay:false,
+    autoplayTimeout:2000,
+    navigation:false,
+    dots: false,
+    autoplayHoverPause:true,
+                responsiveClass:true,
+    responsive:{
+        0:{
+            items:3,
+            nav:true
+        },
+        600:{
+            items:5,
+            nav:false
+        }
+    }
+});
+       }
+      });
+  </script>
+
+</html>
+{% endblock content %}
+

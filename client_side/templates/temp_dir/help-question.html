@@ -1,0 +1,54 @@
+{% load static %} 
+{% include "temp_dir/header.html" %} 
+{% include "temp_dir/navbar-3.html" %}
+<body class="invert-background">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'help' %}">Ahhaa Help Center</a></li>
+      <li id="helpheading1" class="breadcrumb-item active" aria-current="page">Ahhaa One</li>
+    </ol>
+  </nav>
+
+  <div class="container help-section-container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 id="helpheading" style="font-family: poppinsBold">Ahhaa One</h2>
+        <br />
+      </div>
+      <div class="col-md-6">
+        <!-- //array 1 start  -->
+        {% for question in answer1 %}
+        <h6 class="question">
+          <a href="{% url 'help-question-answer' question.questionID %}"
+            >{{question.questionID__questionName}}</a
+          >
+        </h6>
+        {% endfor %}
+        <!-- //array 1 end -->
+      </div>
+      <div class="col-md-6">
+        <!-- //array 2 start -->
+        {% for question in answer2 %}
+        <h6 class="question">
+          <a href="{% url 'help-question-answer' question.questionID %}"
+            >{{question.questionID__questionName}}</a
+          >
+        </h6>
+        {% endfor %}
+        <!-- //array 2 end  -->
+      </div>
+    </div>
+  </div>
+  {% include 'temp_dir/footer.html' %}
+  <script>
+    $(document).ready(function(){
+      var data = sessionStorage.getItem('helpHeading');
+      $('#helpheading').text(data);
+      $('#helpheading1').text(data);
+      sessionStorage.setItem('link', window.location.href);
+      $("a").on("click", function(){
+        sessionStorage.setItem('helpQuestion', $(this).text());
+      });
+    });
+  </script>
+</body>

@@ -1,0 +1,49 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Ahhaa World">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>Ahhaa: Your mental well-being Partner</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/carousel/">
+
+    <!-- Bootstrap core CSS -->
+     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="{% static 'dist/js/bootstrap.min.js' %}"></script>
+<link href="{% static 'dist/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/owl.carousel.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/owl.theme.default.min.css' %}" rel="stylesheet">
+      <script src="{% static 'dist/js/jquery.min.js' %}"></script>     
+      <script src="{% static 'dist/js/owl.carousel.js' %}"></script>
+	  <script type='text/javascript' src='http://creshsolutions.com/ahhaa/jquery.vticker.js'></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+ <!-- Custom styles for this template -->
+    <link href="{% static 'dist/css/carousel.css' %}" rel="stylesheet">
+	 <link href="{% static 'css/ahhaa-style.css' %}" rel="stylesheet">
+   <!-- <script src="{% static 'dist/js/fas.js' %}" crossorigin="anonymous"></script> -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+  </head>
+  <body>
+    {% block content %}{% endblock content %} 
+  <script>
+    
+    function searchresults(i)
+      {
+          var q=$("#"+i).val();
+          localStorage.setItem("query", JSON.stringify(q));
+          location.href="{% url 'cluster' %}";
+      }
+      function searchPlaceholder()
+      {
+       $(".searchinput").attr("placeholder","Type how you feel...");
+      }
+  </script>
+  
+  

@@ -1,0 +1,45 @@
+{% load static %} 
+{% include "temp_dir/header.html" %} 
+<div class="container">
+
+
+<div class="row">
+
+ <div class="col-md-12 text-center" style="color:#fff">
+    <br>
+<br>
+<br>
+  <h1 style="font-family: poppinsBold;">Payment Failed</h1>
+  <div style="height:300px;">
+  <img src="{% static 'images/green-bulb-300.svg' %}" id="meditatingBulb" style="max-height: 250px;margin:20px;"/>
+  </div>
+  <br>
+  <br>
+  <p>Guess what?<br>Just in this couple of moments as we face this temporary payment hiccup,<br>we are adding two new tracks on the other side just for you to feel even more relieved & happier in life.<br>Perhaps Lets try again.</p>
+   <a class="btn btn-primary menu-text second-color roundButton" href="ahhaa-one.php" style="padding: 10px;" role="button">Payment Retry</a>
+ 
+  
+  </div>
+ 
+</div>
+ 
+</div>
+ 
+<script>
+// alert($("#meditatingBulb").prop("height"));
+
+ani();
+
+function ani() {
+    $.when(
+           $('#meditatingBulb').delay(2000).animate({
+            height: '250px',
+        }, 2000, 'linear'),$('#meditatingBulb').delay(2000).animate({
+            height: '200px'
+        }, 2000, 'linear') ).then(ani);
+}
+    
+
+      
+ 
+</script>

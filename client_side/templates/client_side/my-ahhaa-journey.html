@@ -1,0 +1,126 @@
+{% extends "client_side/header.html" %} {% block content %}
+{% load social_share %}
+
+<body>
+  <div class="container-fluid">
+    <!-- Control the column width, and how they should appear on different devices -->
+    <div class="row myAhhaa" style="width: 90%; margin: auto">
+      <div class="col-sm-4 myAhhaaMenu">
+        <span class="highText">526</span> mins<br /><span
+          class="pink-text-color"
+          >Total time spent</span
+        >
+      </div>
+      <a href="{% url 'insights' %}"
+        ><div class="col-sm-4 myAhhaaMenu">My insights</div></a
+      >
+      <div class="col-sm-4 myAhhaaMenu activeMyAhha">My Journey</div>
+      <a href="{% url 'logout' %}" style="color: white; font-size: 30px; margin-left: 10px;">LOGOUT</a>
+      <a href="{% url 'change_password' %}" style="color: white; font-size: 10px; margin-left: 10px;">Change password</a>
+    </div>
+  </div>
+
+  <div class="container myjourneyContainer">
+    <div class="row">
+      <h2 class="collectionHeading">Your Most Played Tracks</h2>
+      <h4 class="collectionHeadingView">View all ></h4>
+      <div class="owl-carousel owl-theme myjourney" id="most-played">
+      </div>
+    </div>
+  </div>
+
+  <div class="container myjourneyContainer">
+    <div class="row">
+      <h2 class="collectionHeading">Your Most Viewed Collections</h2>
+      <h4 class="collectionHeadingView">View all ></h4>
+      <div class="owl-carousel owl-theme myjourney" id="most-collection">
+      </div>
+    </div>
+  </div>
+
+  <div class="container myjourneyContainer">
+    <div class="row">
+      <h2 class="collectionHeading">Favourite Tracks</h2>
+      <h4 class="collectionHeadingView">View all ></h4>
+      <div class="owl-carousel owl-theme myjourney" id="fav_track">
+      </div>
+    </div>
+  </div>
+
+  {% post_to_linkedin 'login' %}
+
+  <script>
+    $(document).ready(function(){
+      userid = 1;
+      // fav track ajax
+      var urls1 = "{% url 'favtrack-list' 0 %}".replace('0', userid);
+      $.ajax({
+        type: "GET",
+        url: urls1,
+        success: function(data){
+          console.log('favtrack', data)
+          for(var i = 0; i < data.length; i++){
+            var ele = '<div class="item myjourneyCovers"><img id='+data[i].trackID+'\
+            class="card-img-top" src='+data[i].trackID__trackCoverArt+' alt=""></div>'
+            $("#fav_track").append(ele);
+          }
+          setCarousel("fav_track");
+        },
+        error: function(xhr){
+          console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);  
+      }});
+
+      // most palyed ajax
+      var urls2 = "{% url 'usertrack-peruser' 0 %}".replace('0', userid);
+      $.ajax({
+        type: "GET",
+        url: urls2,
+        success: function(data){
+          for(var i = 0; i < data.length; i++){
+            var ele = '<div class="item myjourneyCovers"><img class="card-img-top" id='+data[i].trackID+'\
+              src='+data[i].trackID__trackCoverArt+' alt="" /></div>'
+            $("#most-played").append(ele);
+          }
+          setCarousel("most-played");
+        },
+        error: function(xhr){
+          console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);  
+        }});
+        
+      // most visited collection
+      var urls3 = "{% url 'usertrack-perusercol' 0 %}".replace('0', userid);
+        $.ajax({
+          type: "GET",
+          url: urls3,
+          success: function(data){
+            console.log('collection', data)
+            for(var i = 0; i < data.length; i++){
+            var ele = '<div class="item myjourneyCovers">\
+              <img class="card-img-top collectionsImage1"src='+data[i].collectionID__collectionCoverArt+'alt=""/></div>'
+              $("#most-collection").append(ele);
+            }
+            setCarousel("most-collection");
+          },
+          error: function(xhr){
+            console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);  
+          }});
+        
+      function setCarousel(id) {
+        var owl = $("#"+id);
+        owl.owlCarousel({
+        items: 5,
+        loop: false,
+        margin: 10,
+        autoplay: false,
+        autoplayTimeout: 2000,
+        navigation: false,
+        dots: false,
+        autoplayHoverPause: true,
+        
+      })
+    };
+
+    });
+  </script>
+</body>
+{% endblock content %}

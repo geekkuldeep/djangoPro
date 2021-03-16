@@ -1,0 +1,92 @@
+{% extends "account/base.html" %}
+{% load widget_tweaks %}
+{% block title %}Register your account here - Ahhaa{% endblock %}
+{% block content %}
+
+<body class="registrationBody">
+    <br><br> <br><br><br>
+    <div class="container-fluid registrationFormContainer">
+        <div class="container">
+
+            <hr>
+            <div class="row ">
+                <div class="col-md-6">
+                    <h3>Register</h3>
+                    <p>Sample Text</p>
+                    <br><br><br>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <fieldset>
+
+
+                            <div class="form-group">
+                                {% render_field form.email class+="formInputs input-lg" placeholder="Enter email" %}
+                            </div><br>
+
+                            <br>
+                            <div class="form-group">
+                                {% render_field form.password1 class+="formInputs input-lg" placeholder="Your password" %}
+                            </div><br>
+                            <br>
+
+                            <div class="form-group">
+                                {% render_field form.password2 class+="formInputs input-lg" placeholder="Confirm Password" %}
+                            </div>
+                            <div class="form-check">
+                                <br>
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input">
+                                    By Clicking register you're agree to our policy & terms
+                                </label>
+
+                            </div>
+                            <div><br>
+                                <center><input type="submit"
+                                        class="btn btn-lg btn-primary  first-color roundButton registrationBtn"
+                                        value="Register"/>
+                                    <br>
+                                    {{ form.errors }}
+                                    <br> <br>
+                                    <a href="#" class="fa fa-facebook"></a>
+                                    <a href="#" class="fa fa-google"></a>
+                                    <br> <br> <br>
+                                    <p>Already have an account? <a href="{% url 'login' %}">LOGIN</a> </p>
+                                </center>
+
+
+
+                            </div>
+
+
+                        </fieldset>
+                    </form>
+                </div>
+
+
+                <div class="col-md-6">
+                    <br><br><br><br><br><br><br><br>
+                    <center>
+                        <h5>Have an account?</h5>
+                        <div><br>
+                            <center><a href="{% url 'login' %}"><input type="submit"
+                                        class="btn btn-lg btn-primary  nocolor roundButton registrationBtn"
+                                        value="Login"></a></center>
+                        </div>
+
+                    </center>
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+        </div>
+</body>
+
+
+
+{% endblock content %}

@@ -1,0 +1,41 @@
+{% load static %} 
+{% include "temp_dir/header.html" %} 
+{% include "temp_dir/navbar-3.html" %}
+<body class="invert-background">
+  <div class="container help-section-container">
+    <center>
+      <h2 style="font-family: poppinsBold">Help</h2>
+      <p>Here are some frequently asked questions about Ahhaa</p>
+    </center>
+    <br />
+    <div class="row" id="help">
+      <!-- //array start -->
+
+      <!-- //array end -->
+    </div>
+  </div>
+  {% include 'temp_dir/footer.html' %}
+  <script>
+    $(document).ready(function(){
+      urls = "{% url 'help-list' %}";
+      $.ajax({
+        type: "GET",
+        url: urls,
+        success: function(data){
+          var ele = '';
+          for(i=0; i<data.length; i++){
+            urls = "{% url 'help-question' 0 %}".replace("0", data[i]["helpID"]);
+            ele+='<div class="col-md-4 col-sm-6"><a  id='+ data[i]["helpID"] +' href='+ urls +'><div class="help-section-block"><br />'+ data[i]["helpHeading"] +'</div></a></div>';
+          }
+          document.getElementById("help").innerHTML=ele;
+        },
+        error: function(xhr){
+          console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);  
+        }
+      });
+      $("#help").on("click", "a",function(){
+        sessionStorage.setItem('helpHeading', $(this).text());
+      });
+    });
+  </script>
+</body>

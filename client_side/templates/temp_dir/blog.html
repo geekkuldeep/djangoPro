@@ -1,0 +1,42 @@
+{% include "temp_dir/header.html" %}
+{% include "temp_dir/navbar-3.html" %}
+{% load static %}
+ <div class="container" style='background-image: url("http://picsum.photos/1500");min-height: 700px;margin:0;max-width:100%;padding:0;padding-top:100px;	'>
+ <div class="row">
+ <div class="page-header text-center">
+    <h1 style="font-size:50px;">Blogs</h1>
+    {% if latestArticleTitle == 'NULL' %}
+	   <h3  style="font-size:30px;">Latest Article Title</h3>
+    {% else %}
+        <h3  style="font-size:30px;">{{ latestArticleTitle }}</h3>
+    {% endif %}
+	   <center>
+	   <a class="nav-link btn btn-sm btn-primary menu-text third-color roundButton" href="#blogread" style="width:300px;" role="button"><i class="fa fa-arrow-down"></i> Read More</a>
+	   </center>
+  </div>
+ </div>
+ </div>
+ 
+ <div class="container">
+  <div class="row blogrow" id="blogread">
+{% for blog in blog %}
+        <div class="col-md-4">
+            <a href="{% url 'blog-read' blog.blogURL %}">
+            <div class="card mb-4">
+                <!-- need to put nlog image -->
+                <img class="card-img-top" src="http://picsum.photos/100/200" alt="" style="border:none;max-height:200px;">
+                <div class="card-body" >
+                    <span>{{ blog.blogDate }}</span>
+                    <h3>{{ blog.blogTitle }}</h3>
+                    <p class="card-text" style=' white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>{{ blog.blogDescription }}</p>          
+                </div>
+            </div>
+            </a>
+        </div>
+{% endfor %}
+  </div>			   
+    </div>
+  </div>
+
+  {% include 'temp_dir/footer.html' %} 
+

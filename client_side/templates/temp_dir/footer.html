@@ -1,0 +1,83 @@
+{% load static %}
+
+<footer>
+  <div class="grid-container">
+    <div class="item1">
+      <img src="{% static 'images/logo.png' %}" class="logo-simple-menu" />
+      <p class="text-muted mb-4 footerText1">About Ahhaa</p>
+    </div>
+    <div class="item2">
+      <ul class="list-unstyled mb-0">
+        <li class="mb-2">
+          <a href="{% url 'ahhaa-one' %}" class="text-muted">Ahhaa One<br /></a>
+        </li>
+        <li class="mb-2">
+          <a href="{% url 'partner-with-us' %}" class="text-muted">Partner with Us<br /></a>
+        </li>
+        <li class="mb-2">
+          <a href="{% url 'careers' %}" class="text-muted">Careers<br /></a>
+        </li>
+        <li class="mb-2">
+          <a href="{% url 'blogs' %}" class="text-muted">Blog<br /></a>
+        </li>
+      </ul>
+    </div>
+    <div class="item3">
+      <ul class="list-unstyled mb-0">
+        <li class="mb-2">
+          <a href="{% url 'about-us' %}" class="text-muted">About Us<br /></a>
+        </li>
+        <li class="mb-2">
+          <a href="{% url 'mom-monk' %}" class="text-muted">Mom & Monk<br /></a>
+        </li>
+        <li class="mb-2">
+          <a href="{% url 'our-team' %}" class="text-muted">Our Team<br /></a>
+        </li>
+        <li class="mb-2">
+          <a href="{% url 'press-media' %}" class="text-muted">Press<br /></a
+        </li>
+      </ul>
+    </div>
+    <div class="item4">
+      <ul class="list-unstyled mb-0">
+        <li class="mb-2">
+          <a href="{% url 'contact-us' %}" class="text-muted">Contact Us<br /></a>
+        </li>
+        <li class="mb-2">
+          <a href="{% url 'help' %}" class="text-muted"
+            >Help<br
+          /></a>
+        </li>
+
+        <li class="mb-2">
+          <a href="{% url 'terms-conditions' %}" class="text-muted">Terms<br /></a>
+        </li>
+        <li class="mb-2">
+          <a href="{% url 'privacy-policy' %}" class="text-muted">Privacy<br /></a>
+        </li>
+      </ul>
+    </div>
+    <div class="item5">
+      <h6 class="text-uppercase font-weight-bold mb-4 footerText2">Quotes</h6>
+      <img src="http://picsum.photos/200" />
+    </div>
+    <div class="item6">
+      <center>
+        <i class="fa fa-twitter socialfooter"></i>
+        <i class="fa fa-instagram socialfooter"></i>
+        <i class="fa fa-linkedin socialfooter"></i>
+        <i
+          class="fa fa-facebook socialfooter"
+          style="background: inherit; color: inherit; font-size: 20px"
+        ></i>
+        <i class="fa fa-youtube socialfooter"></i>
+        <i class="fa fa-spotify socialfooter"></i>
+      </center>
+    </div>
+  </div>
+  <div class="container text-center">
+    <p class="text-muted mb-0 py-2" style="font-size: 12px">
+      &copy; {% now "Y" %} Ahhaa World Online Services Pvt. Ltd. All risghts reserved.
+    </p>
+  </div>
+</footer>
